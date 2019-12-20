@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+<link rel="stylesheet" href="./assets/css/style.css">
+<title>Quiz Game</title>
+</head>
+<body>
+  
+  <header>
+    <h2>Time Left: <span id="time-left"></span></h2>
+  </header>
+
+  <main>
+    <!-- start screen -->
+    <div id="start-screen">
+      <h1>Play the game!</h1>
+      <button id="start-game-btn">Start Game</button>
+    </div>
+
+    <!-- div for all quiz content -->
+    <div id="quiz-content" class="hide">
+      <h2>Quiz questions will be here</h2>
+    </div>
+
+    <!-- div for post-game information -->
+    <div id="post-game-screen" class="hide">
+      <h2>Post Game Screen</h2>
+      <p>Your Score: <span id="user-score"></span></p>
+      <button id="play-again-btn">Play Again?</button>
+    </div>
+
+  </main>
+
+
+  <script src="./assets/js/questions.js"></script>
+  <script src="./assets/js/script.js"></script>
+</body>
+</html>
