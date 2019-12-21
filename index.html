@@ -17,7 +17,10 @@
 
     <!-- Row 1 Header-->
     <header class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
+        <h2>Score: <span id="current-score"></span></h2>
+      </div>
+      <div class="col-md-6">
         <h2>Time Left: <span id="time-left"></span></h2>
       </div>
     </header>
@@ -25,13 +28,13 @@
     <!-- Row 2 Main-->
     <main class="card row">
       <!-- start screen -->
-      <div id="start-screen  class=" col-md-12>
+      <div id="start-screen"  class="hide col-md-12">
         <h1>Play the game!</h1>
-        <button id="start-game-btn">Start Game</button>
+        <button class="btn" id="start-game-btn">Start Game</button>
       </div>
 
       <!-- div for all quiz content -->
-      <div id="quiz-content" class="hide col-md-12">
+      <div id="quiz-content" class="hide col-md-12 flex-row justify-center">
         <h2>Quiz questions will be here</h2>
       </div>
 
