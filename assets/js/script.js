@@ -39,7 +39,7 @@ function startBtnHandler() {
   clearInterval(timerIntervalId);
 
   // set secondsLeft variable starting time (300 seconds = 5 minutes)
-  var secondsLeft = 300;
+  var secondsLeft = 50;
   console.log(secondsLeft);
 
   // write secondsLeft to the page
@@ -105,7 +105,7 @@ function displayQuestion(questionIndex) {
     console.log(multichoiceBtnEl);
 
     // Give each "choiceBtn" the following classes: "choice-button" "choice" "choice-button-color".
-    multichoiceBtnEl.setAttribute("class","choice-button choice choice-button-color");
+    multichoiceBtnEl.setAttribute("class", "choice-button choice choice-button-color");
 
     // 4. Give each "choiceBtn" an attribute called "data-choice", with a value eqaual to "choices[i]"
     multichoiceBtnEl.setAttribute("data-choice", currentQuestion.choices[i]);
@@ -119,15 +119,41 @@ function displayQuestion(questionIndex) {
 }
 
 // create function to handle users answering
-// use event delegation to make sure button was clicked
-// read data attribute of what question we answered (index)
-// check to see if choice picked is same as questions correct answer
-// if yes, increase score++
-// if no, subtract time from secondsLeft
+function processAns(event) {
+  // use event delegation to make sure button was clicked
+  if (!event.target.matches('.btn')) {
+    return false;
+  }
 
-// get index of next question (this question's index + 1)
-// run displayQuestion(nextQuestionIndex)
+  // read data attribute of what question we answered (index)
+  var buttonClickedText = event.target.textContent;
+  console.log("@@@@@@@@@@@@");
+  console.log(buttonClickedText);
+  console.log("@@@@@@@@@@@@");
 
+  // get parent element
+  var quizContent = event.target.parentNode;
+  console.log("=============******************===================");
+  console.log(quizContent);
+  console.log("=============******************===================");
+
+  // check to see if choice picked is same as questions correct answer
+  var quizContentIndex = parseInt(quizContent.getAttribute('data-contact-index'));
+  console.log("================================");
+  console.log(quizContentIndex);
+  //console.log(questionsArray.choices[quizContentIndex]);
+  //console.log(questionsArray.answer.value);
+  console.log("================================");
+
+  // if yes, increase score++
+  // if no, subtract time from secondsLeft
+
+  // get index of next question (this question's index + 1)
+  var nextquestion = quizContentIndex + 1;
+
+  // run displayQuestion(nextQuestionIndex)
+  displayQuestion(nextquestion);
+}
 
 
 // create a function to stop the game (either by answering all the questions or time has run out)
@@ -147,6 +173,6 @@ function stopGame() {
 // start game button (for starting the game)
 startBtnEl.addEventListener('click', startBtnHandler);
 // quizcontent (for answering a question) -> use event delegation
-quizContentDivEl.addEventListener('click', displayQuestion);
-  // play again button (for starting the game)
-
+quizContentDivEl.addEventListener('click', processAns);
+// play again button (for starting the game)
+playAgainBtnEl.addEventListener('click', startBtnHandler);
