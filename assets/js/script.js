@@ -22,6 +22,8 @@ var pstGameScreenDivEl = document.querySelector("#post-game-screen");
 var userScoreSpanEl = document.querySelector("#user-score");
 // play-again-btn
 var playAgainBtnEl = document.querySelector("#play-again-btn");
+// play-again-btn
+var clearHighScoreBtnEl = document.querySelector("#clear-highScore-btn");
 
 // create variables for game logic
 // timerIntervalId
@@ -31,14 +33,14 @@ var score = 0;
 // secondsLeft
 var secondsLeft = 0;
 //Highscore
-var highScore = 0;
+var myHighScore = 0;
 if (localStorage.getItem("highScore") === null) {
-  console.log("highscore not in local storage");
-  localStorage.setItem("highScore", highScore);
+  // console.log("highscore not in local storage");
+  localStorage.setItem("highScore", myHighScore);
 } else {
-  console.log("highscore is ........in local storage");
+  // console.log("highscore is ........in local storage");
   highScoreSpanEl.textContent = localStorage.getItem("highScore");
-  console.log(localStorage.getItem("highScore"));
+  // console.log(localStorage.getItem("highScore"));
 }
 
 
@@ -48,20 +50,30 @@ startScreenDivEl.classList.remove("hide");
 // create function to start game
 function startBtnHandler() {
 
-  console.log("hi from Start Button");
+  if (localStorage.getItem("highScore") === null) {
+    // console.log("highscore not in local storage");
+    localStorage.setItem("highScore", 0);
+  } else {
+    // console.log("highscore is ........in local storage");
+    highScoreSpanEl.textContent = localStorage.getItem("highScore");
+    // console.log(localStorage.getItem("highScore"));
+  }
+    
+
+  // console.log("hi from Start Button");
   // prevent a timer running twice
   clearInterval(timerIntervalId);
 
   // set secondsLeft variable starting time (300 seconds = 5 minutes)
   secondsLeft = 75;
-  console.log(secondsLeft);
+  // console.log(secondsLeft);
 
   // write secondsLeft to the page
   timeLeftSpanEl.textContent = secondsLeft;
 
   // reset score to 0
   score = 0;
-  console.log(score);
+  // console.log(score);
 
   // write score to the page (optional)
   currentScoreSpanEl.textContent = score;
@@ -99,13 +111,13 @@ function displayQuestion(questionIndex) {
 
   // get questions[questionIndex]
   var currentQuestion = questionsArray[questionIndex];
-  console.log(currentQuestion);
+  // console.log(currentQuestion);
   // print question to the page
   var questionDivEl = document.createElement('div');
   questionDivEl.classList.add('card');
   // use data attribute to know which index the question is
   questionDivEl.setAttribute('data-contact-index', questionIndex);
-  console.log(questionIndex);
+  // console.log(questionIndex);
 
   var questionH2El = document.createElement('h2');
   questionH2El.textContent = currentQuestion.question;
@@ -114,9 +126,9 @@ function displayQuestion(questionIndex) {
   // loop through choices and print out choices to the page (make them buttons)
   for (var i = 0; i < currentQuestion.choices.length; i++) {
 
-    console.log("Hi from loop to create choices buttons");
+    // console.log("Hi from loop to create choices buttons");
     var multichoiceBtnEl = document.createElement('button');
-    console.log(multichoiceBtnEl);
+    // console.log(multichoiceBtnEl);
 
     // Give each "choiceBtn" the following classes: "choice-button" "choice" "choice-button-color".
     multichoiceBtnEl.setAttribute("class", "choice-button choice choice-button-color");
@@ -149,23 +161,23 @@ function processAns(event) {
 
   // read data attribute of what question we answered (index)
   var buttonClickedText = event.target.textContent;
-  console.log("@@@@@@@@@@@@");
-  console.log(buttonClickedText);
-  console.log("@@@@@@@@@@@@");
+  // console.log("@@@@@@@@@@@@");
+  // console.log(buttonClickedText);
+  // console.log("@@@@@@@@@@@@");
 
   // get parent element
   var quizContent = event.target.parentNode;
-  console.log("=============******************===================");
-  console.log(quizContent);
-  console.log("=============******************===================");
+  // console.log("=============******************===================");
+  // console.log(quizContent);
+  // console.log("=============******************===================");
 
   // check to see if choice picked is same as questions correct answer
   var quizContentIndex = parseInt(quizContent.getAttribute('data-contact-index'));
-  console.log("================================");
-  console.log(quizContentIndex);
+  // console.log("================================");
+  // console.log(quizContentIndex);
 
-  console.log(questionsArray[quizContentIndex].choices);
-  console.log(questionsArray[quizContentIndex].answer);
+  // console.log(questionsArray[quizContentIndex].choices);
+  // console.log(questionsArray[quizContentIndex].answer);
 
   //console.log(questionsArray.choices[quizContentIndex]);
   //console.log(questionsArray.answer.value);
@@ -175,33 +187,30 @@ function processAns(event) {
   // console.log(quizContent[quizContentIndex].choices[3]);
   //console.log(quizContent[quizContentIndex].answer);
 
-  console.log("================================");
+  // console.log("================================");
 
   // if yes, increase score++
   // if no, subtract time from secondsLeft
-  console.log("///////////////////////////////////////////////////////");
+  // console.log("///////////////////////////////////////////////////////");
   if (buttonClickedText === questionsArray[quizContentIndex].answer) {
     var rightAudioEl = document.getElementById("rightAudio");
     rightAudioEl.play();
 
-    console.log("From Compare ans if condition - right");
+    // console.log("From Compare ans if condition - right");
     score += 5;
     currentScoreSpanEl.textContent = score;
-
-
-
     // console.log(answerTextEl.textContent);
     // answerTextEl.textContent = "Right!";
     // console.log(answerTextEl.textContent);
   } else {
     var wrongAudioEl = document.getElementById("wrongAudio");
     wrongAudioEl.play();
-    console.log("From Compare ans if condition - wrong");
-    console.log("%%%%%%%%%%%%%%%%%");
-    console.log(secondsLeft);
+    // console.log("From Compare ans if condition - wrong");
+    // console.log("%%%%%%%%%%%%%%%%%");
+    // console.log(secondsLeft);
     secondsLeft -= 15;
-    console.log(secondsLeft);
-    console.log("%%%%%%%%%%%%%%%%%");
+    // console.log(secondsLeft);
+    // console.log("%%%%%%%%%%%%%%%%%");
 
     currentScoreSpanEl.textContent = score;
 
@@ -229,19 +238,27 @@ function stopGame() {
   score += secondsLeft;
   userScoreSpanEl.textContent = score;
   currentScoreSpanEl.textContent = score;
-  
-  highScore = localStorage.getItem(highScore);
 
-  if (score > highScore) {
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+  myHighScore = localStorage.getItem("highScore");
+
+  if (score > myHighScore) {
+    // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     localStorage.setItem("highScore", score);
     highScoreSpanEl.textContent = localStorage.getItem("highScore");    
+  } else {
+
   }
 
   //clear the quiz screen
   quizContentDivEl.textContent = '';
 }
 
+//clear localstorage function
+function clearLocalStorageBtnHandler() {
+  localStorage.setItem("highScore", 0);
+  highScoreSpanEl.textContent = localStorage.getItem("highScore");
+    
+}
 
 // add event listeners
 // start game button (for starting the game)
@@ -250,3 +267,5 @@ startBtnEl.addEventListener('click', startBtnHandler);
 quizContentDivEl.addEventListener('click', processAns);
 // play again button (for starting the game)
 playAgainBtnEl.addEventListener('click', startBtnHandler);
+//clear localstorage
+clearHighScoreBtnEl.addEventListener('click', clearLocalStorageBtnHandler);
