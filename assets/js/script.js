@@ -44,6 +44,7 @@ function startBtnHandler() {
 
   // write secondsLeft to the page
   timeLeftSpanEl.textContent = secondsLeft;
+
   // reset score to 0
   score = 0;
   console.log(score);
@@ -57,36 +58,64 @@ function startBtnHandler() {
   // show quiz-content element
   quizContentDivEl.classList.remove("hide");
 
-  
+
   // set timerIntervalId to setInterval function that decrements secondsLeft every second
   timerIntervalId = setInterval(function () {
     secondsLeft--;
     // write secondsLeft to the page
-  timeLeftSpanEl.textContent = secondsLeft;
-  
+    timeLeftSpanEl.textContent = secondsLeft;
+
     if (secondsLeft <= 0) {
       stopGame();
     }
   }, 1000);
 
   // display first question
-displayQuestion(0);
+  displayQuestion(0);
 
 }
 
 // create function to display a question and possible choices
 function displayQuestion(questionIndex) {
   // check if questionIndex in questions array doesn't exist
-  if (!questions[questionIndex]) {
+  if (!questionsArray[questionIndex]) {
     // stop game, we've hit last question
     return stopGame();
   }
 
   // get questions[questionIndex]
+  var currentQuestion = questionsArray[questionIndex];
+  console.log(currentQuestion);
   // print question to the page
+  var questionDivEl = document.createElement('div');
+  questionDivEl.classList.add('card');
   // use data attribute to know which index the question is
-  // loop through choices and print out choices to the page (make them buttons)
+  questionDivEl.setAttribute('data-contact-index', questionIndex);
+  console.log(questionIndex);
 
+  var questionH2El = document.createElement('h2');
+  questionH2El.textContent = currentQuestion.question;
+  questionDivEl.append(questionH2El);
+
+  // loop through choices and print out choices to the page (make them buttons)
+  for (var i = 0; i < currentQuestion.choices.length; i++) {
+
+    console.log("Hi from loop to create choices buttons");
+    var multichoiceBtnEl = document.createElement('button');
+    console.log(multichoiceBtnEl);
+
+    // Give each "choiceBtn" the following classes: "choice-button" "choice" "choice-button-color".
+    multichoiceBtnEl.setAttribute("class","choice-button choice choice-button-color");
+
+    // 4. Give each "choiceBtn" an attribute called "data-choice", with a value eqaual to "choices[i]"
+    multichoiceBtnEl.setAttribute("data-choice", currentQuestion.choices[i]);
+
+    multichoiceBtnEl.textContent = currentQuestion.choices[i];
+    multichoiceBtnEl.classList.add('btn');
+    questionDivEl.append(multichoiceBtnEl);
+  }
+
+  quizContentDivEl.append(questionDivEl);
 }
 
 // create function to handle users answering
