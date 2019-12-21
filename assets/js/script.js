@@ -109,12 +109,14 @@ function displayQuestion(questionIndex) {
 
     // 4. Give each "choiceBtn" an attribute called "data-choice", with a value eqaual to "choices[i]"
     multichoiceBtnEl.setAttribute("data-choice", currentQuestion.choices[i]);
+    //multichoiceBtnEl.setAttribute('data-contact-index', i);
 
     multichoiceBtnEl.textContent = currentQuestion.choices[i];
     multichoiceBtnEl.classList.add('btn');
     questionDivEl.append(multichoiceBtnEl);
   }
 
+  quizContentDivEl.textContent = '';
   quizContentDivEl.append(questionDivEl);
 }
 
@@ -141,12 +143,29 @@ function processAns(event) {
   var quizContentIndex = parseInt(quizContent.getAttribute('data-contact-index'));
   console.log("================================");
   console.log(quizContentIndex);
+
+  console.log(questionsArray[quizContentIndex].choices);
+  console.log(questionsArray[quizContentIndex].answer);
+
   //console.log(questionsArray.choices[quizContentIndex]);
   //console.log(questionsArray.answer.value);
+  //console.log(quizContent[quizContentIndex].choices);
+  // console.log(quizContent[quizContentIndex].choices[1]);
+  // console.log(quizContent[quizContentIndex].choices[2]);
+  // console.log(quizContent[quizContentIndex].choices[3]);
+  //console.log(quizContent[quizContentIndex].answer);
+
   console.log("================================");
 
   // if yes, increase score++
   // if no, subtract time from secondsLeft
+  if (buttonClickedText === questionsArray[quizContentIndex].answer) {
+    console.log("From Compare ans if condition - right");
+    score += 5;
+  } else {
+    console.log("From Compare ans if condition - wrong");
+    secondsLeft -= 15;
+  }
 
   // get index of next question (this question's index + 1)
   var nextquestion = quizContentIndex + 1;
@@ -166,6 +185,8 @@ function stopGame() {
   pstGameScreenDivEl.classList.remove("hide");
   // print out user score
   userScoreSpanEl.textContent = score;
+  //clear the quiz screen
+  quizContentDivEl.textContent = '';
 }
 
 
