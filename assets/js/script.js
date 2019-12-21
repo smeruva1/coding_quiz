@@ -39,7 +39,7 @@ function startBtnHandler() {
   clearInterval(timerIntervalId);
 
   // set secondsLeft variable starting time (300 seconds = 5 minutes)
-  secondsLeft = 50;
+  secondsLeft = 75;
   console.log(secondsLeft);
 
   // write secondsLeft to the page
@@ -116,6 +116,12 @@ function displayQuestion(questionIndex) {
     questionDivEl.append(multichoiceBtnEl);
   }
 
+  // answerTextEl = document.createElement('p');
+  // answerTextEl.setAttribute("class", "answerstatus");
+  // answerTextEl.textContent = "";
+  // console.log(answerTextEl.textContent);
+  // questionDivEl.append(answerTextEl);
+
   quizContentDivEl.textContent = '';
   quizContentDivEl.append(questionDivEl);
 }
@@ -159,11 +165,23 @@ function processAns(event) {
 
   // if yes, increase score++
   // if no, subtract time from secondsLeft
+  console.log("///////////////////////////////////////////////////////");
   if (buttonClickedText === questionsArray[quizContentIndex].answer) {
+    var rightAudioEl = document.getElementById("rightAudio");
+    rightAudioEl.play();
+
     console.log("From Compare ans if condition - right");
     score += 5;
     currentScoreSpanEl.textContent = score;
+
+
+
+    // console.log(answerTextEl.textContent);
+    // answerTextEl.textContent = "Right!";
+    // console.log(answerTextEl.textContent);
   } else {
+    var wrongAudioEl = document.getElementById("wrongAudio");
+    wrongAudioEl.play();
     console.log("From Compare ans if condition - wrong");
     console.log("%%%%%%%%%%%%%%%%%");
     console.log(secondsLeft);
@@ -172,6 +190,9 @@ function processAns(event) {
     console.log("%%%%%%%%%%%%%%%%%");
 
     currentScoreSpanEl.textContent = score;
+
+    // console.log(answerTextEl.textContent);
+    // answerTextEl.textContent = "Wrong!";
   }
 
   // get index of next question (this question's index + 1)
@@ -191,7 +212,7 @@ function stopGame() {
   // show post-game-screen
   pstGameScreenDivEl.classList.remove("hide");
   // print out user score
-  userScoreSpanEl.textContent = score;
+  userScoreSpanEl.textContent = score + secondsLeft;
   //clear the quiz screen
   quizContentDivEl.textContent = '';
 }

@@ -28,7 +28,7 @@
     <!-- Row 2 Main-->
     <main class="card row">
       <!-- start screen -->
-      <div id="start-screen"  class="hide col-md-12">
+      <div id="start-screen" class="hide col-md-12">
         <h1>Play the game!</h1>
         <button class="btn" id="start-game-btn">Start Game</button>
       </div>
@@ -42,11 +42,17 @@
       <div id="post-game-screen" class="hide col-md-12 ">
         <h2>Post Game Screen</h2>
         <p>Your Final Score: <span id="user-score"></span></p>
-        <button class="btn"  id="play-again-btn">Play Again?</button>
+        <button class="btn" id="play-again-btn">Play Again?</button>
       </div>
 
     </main>
 
+    <audio id="rightAudio">
+      <source src="assets/audio/325444__troym1__correct.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wrongAudio">
+      <source src="assets/audio/325443__troym1__wrong.mp3" type="audio/mpeg">
+    </audio>
 
     <script src="./assets/js/questions.js"></script>
     <script src="./assets/js/script.js"></script>
