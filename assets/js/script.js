@@ -39,7 +39,7 @@ function startBtnHandler() {
   clearInterval(timerIntervalId);
 
   // set secondsLeft variable starting time (300 seconds = 5 minutes)
-  var secondsLeft = 50;
+  secondsLeft = 50;
   console.log(secondsLeft);
 
   // write secondsLeft to the page
@@ -162,9 +162,16 @@ function processAns(event) {
   if (buttonClickedText === questionsArray[quizContentIndex].answer) {
     console.log("From Compare ans if condition - right");
     score += 5;
+    currentScoreSpanEl.textContent = score;
   } else {
     console.log("From Compare ans if condition - wrong");
+    console.log("%%%%%%%%%%%%%%%%%");
+    console.log(secondsLeft);
     secondsLeft -= 15;
+    console.log(secondsLeft);
+    console.log("%%%%%%%%%%%%%%%%%");
+
+    currentScoreSpanEl.textContent = score;
   }
 
   // get index of next question (this question's index + 1)
