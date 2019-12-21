@@ -3,6 +3,9 @@
 // time-left
 var timeLeftSpanEl = document.querySelector("#time-left");
 
+// show high score
+var highScoreSpanEl = document.querySelector("#high-score");
+
 // show current score
 var currentScoreSpanEl = document.querySelector("#current-score");
 
@@ -27,6 +30,17 @@ var timerIntervalId;
 var score = 0;
 // secondsLeft
 var secondsLeft = 0;
+//Highscore
+var highScore = 0;
+if (localStorage.getItem("highScore") === null) {
+  console.log("highscore not in local storage");
+  localStorage.setItem("highScore", highScore);
+} else {
+  console.log("highscore is ........in local storage");
+  highScoreSpanEl.textContent = localStorage.getItem("highScore");
+  console.log(localStorage.getItem("highScore"));
+}
+
 
 startScreenDivEl.classList.remove("hide");
 
@@ -212,7 +226,18 @@ function stopGame() {
   // show post-game-screen
   pstGameScreenDivEl.classList.remove("hide");
   // print out user score
-  userScoreSpanEl.textContent = score + secondsLeft;
+  score += secondsLeft;
+  userScoreSpanEl.textContent = score;
+  currentScoreSpanEl.textContent = score;
+  
+  highScore = localStorage.getItem(highScore);
+
+  if (score > highScore) {
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    localStorage.setItem("highScore", score);
+    highScoreSpanEl.textContent = localStorage.getItem("highScore");    
+  }
+
   //clear the quiz screen
   quizContentDivEl.textContent = '';
 }
